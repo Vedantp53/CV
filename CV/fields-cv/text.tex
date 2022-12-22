@@ -1,0 +1,31 @@
+\DeclareOptionX<cvtxt>{plaintext}{\def\plaintext{#1}}
+\DeclareOptionX<cvtxt>{bulletlist}{\def\bulletlist{#1}}
+\ExecuteOptionsX<cvtxt>{
+  plaintext=text,
+  bulletlist={}
+}
+\newcommand*\CVPlainTextField[1][]{%
+  \begingroup
+  \setkeys{cvtxt}{#1}
+  \rightminipageonly{%
+  \begin{minipage}{\linewidth}
+  \color{bodytxt}
+  \plaintext
+  \end{minipage}
+  }
+  \endgroup
+}
+\newcommand{\bulletiststyle}[1]{
+    \ifthenelse{\equal{#1}{}}{}{
+        \vspace{\vspacebulletvalue}
+        \readlist\mylist{#1}%
+        %\bulletpadding
+        \begin{itemize} 
+            \foreachitem\z\in\mylist[]{
+                \item \z
+            }
+        \end{itemize}
+        \bulletpadding
+        %\vspace{\vspacebulletvalue}
+    }
+}
